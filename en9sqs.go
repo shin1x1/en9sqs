@@ -21,7 +21,7 @@ func main() {
 	app := cli.NewApp()
 
 	app.Name = "en9sqs"
-	app.Usage = "enqueue messages to Amazon SQS tool"
+	app.Usage = "concurrent enqueue messages to Amazon SQS"
 	app.ArgsUsage = "queue_url message"
 	app.Version = "0.0.1"
 	setUp(app)
