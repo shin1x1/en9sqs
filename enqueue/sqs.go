@@ -8,24 +8,22 @@ import (
 
 type SqsEnqueue struct {
 	QueueUrl *string
-	Region   *string
+	sqs      *sqs.SQS
 }
 
 func NewSqsEnqueue(queueUrl string, region string) *SqsEnqueue {
+	sess := session.Must(session.NewSession(&aws.Config{
+		Region: aws.String(region),
+	}))
+
 	return &SqsEnqueue{
 		QueueUrl: aws.String(queueUrl),
-		Region:   aws.String(region),
+		sqs:      sqs.New(sess),
 	}
 }
 
 func (s *SqsEnqueue) Enqueue(message string) error {
-	sess := session.Must(session.NewSession(&aws.Config{
-		Region: s.Region,
-	}))
-
-	svc := sqs.New(sess)
-
-	_, err := svc.SendMessage(&sqs.SendMessageInput{
+	_, err := s.sqs.SendMessage(&sqs.SendMessageInput{
 		QueueUrl:    s.QueueUrl,
 		MessageBody: aws.String(message),
 	})
