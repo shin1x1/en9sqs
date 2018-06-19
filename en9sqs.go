@@ -23,7 +23,7 @@ func main() {
 	app.Name = "en9sqs"
 	app.Usage = "concurrent enqueue messages to Amazon SQS"
 	app.ArgsUsage = "queue_url message"
-	app.Version = "0.0.1"
+	app.Version = "0.0.2"
 	setUp(app)
 
 	app.Action = func(context *cli.Context) error {

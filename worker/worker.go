@@ -3,7 +3,6 @@ package worker
 import (
 	"sync"
 	"github.com/shin1x1/en9sqs/enqueue"
-	"fmt"
 	"log"
 )
 
@@ -27,8 +26,7 @@ func (w *Worker) Run(mess string, ch chan int) {
 	defer w.wg.Done()
 
 	for i := range ch {
-		m := fmt.Sprintf("%s:%d", mess, i)
-		if err := w.enq.Enqueue(m); err != nil {
+		if err := w.enq.Enqueue(mess); err != nil {
 			log.Fatalln(err)
 		}
 
