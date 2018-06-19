@@ -7,6 +7,7 @@ import (
 	"sync"
 	"github.com/shin1x1/en9sqs/enqueue"
 	"github.com/shin1x1/en9sqs/worker"
+	"time"
 )
 
 type config struct {
@@ -53,6 +54,12 @@ func main() {
 
 		go func() {
 			for i := 1; i <= conf.messageCount; i++ {
+				for {
+					if time.Now().Second() < 2 {
+						break
+					}
+					time.Sleep(500 * time.Millisecond)
+				}
 				loopChan <- i
 			}
 			close(loopChan)
